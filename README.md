@@ -4,7 +4,7 @@
 2. Clone repository https://github.com/ilyukevich/foodgram-project.git
 3. Create an ENV file in the root of the project and fill it
 4. Open foodgram-project folder and run ```sudo docker-compose up -d```
-5. Go inside container ```sudo docker exec -it foodgram-project_web_1 bash```
+5. Go inside container ```sudo docker exec -it exam-food_web_1 bash```
 6. Run commands:
    
    ```python manage.py collectstatic```
