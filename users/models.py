@@ -3,6 +3,4 @@ from django.db import models
 
 
 class User(AbstractUser):
-    """***"""
-
     email = models.EmailField(blank=False, unique=True)

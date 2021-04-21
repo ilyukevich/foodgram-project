@@ -11,8 +11,6 @@ from users.models import User
 
 
 class Recipe(models.Model):
-    """***"""
-
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -67,8 +65,6 @@ class Recipe(models.Model):
 
 
 class Ingredient(models.Model):
-    """***"""
-
     title = models.CharField(
         max_length=200,
         verbose_name='Название'
@@ -87,8 +83,6 @@ class Ingredient(models.Model):
 
 
 class RecipeIngredient(models.Model):
-    """***"""
-
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
@@ -115,8 +109,6 @@ class RecipeIngredient(models.Model):
 
 
 class ShoppingList(models.Model):
-    """***"""
-
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -140,8 +132,6 @@ class ShoppingList(models.Model):
 
 
 class Follow(models.Model):
-    """***"""
-
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -168,8 +158,6 @@ class Follow(models.Model):
 
 
 class Favorite(models.Model):
-    """***"""
-
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
