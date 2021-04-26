@@ -4,7 +4,7 @@ from users.models import User
 
 
 class RegistrationForm(UserCreationForm):
-    """***"""
+    """Form for registration"""
 
     class Meta:
         model = User

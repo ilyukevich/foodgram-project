@@ -10,7 +10,7 @@ TAGS = [
 
 
 class RecipeIngredientForm(forms.ModelForm):
-    """***"""
+    """Ingredient Form"""
 
     class Meta:
         model = RecipeIngredient
@@ -18,7 +18,7 @@ class RecipeIngredientForm(forms.ModelForm):
 
 
 class RecipeForm(forms.ModelForm):
-    """***"""
+    """Form for creating a recipe"""
 
     tag = forms.MultipleChoiceField(
         required=False,

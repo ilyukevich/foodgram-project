@@ -5,7 +5,7 @@ from users.models import User
 
 
 class IngredientSerializer(serializers.ModelSerializer):
-    """***"""
+    """Serializer for ingredient"""
 
     class Meta:
         fields = '__all__'
@@ -13,7 +13,7 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 
 class ShoppingListSerializer(serializers.ModelSerializer):
-    """***"""
+    """Serializer for shopping list"""
 
     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     recipe = serializers.PrimaryKeyRelatedField(queryset=Recipe.objects.all())
@@ -24,7 +24,7 @@ class ShoppingListSerializer(serializers.ModelSerializer):
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
-    """***"""
+    """Serializer for favorite"""
 
     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     recipe = serializers.PrimaryKeyRelatedField(queryset=Recipe.objects.all())
@@ -35,7 +35,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
 
 
 class FollowSerializer(serializers.ModelSerializer):
-    """***"""
+    """Serializer for follow"""
 
     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     author = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())

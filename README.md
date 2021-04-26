@@ -34,3 +34,6 @@
 * Django
 * Django REST
 * Docker
+
+# Project on a production server
+http://84.252.128.104:8080/

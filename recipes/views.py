@@ -12,7 +12,7 @@ from users.models import User
 
 
 def index(request):
-    """***"""
+    """Index page"""
 
     shopping_list_ids = None
     favorites_ids = None
@@ -43,7 +43,7 @@ def index(request):
 
 
 def author_recipes(request, slug):
-    """***"""
+    """Author's recipes"""
 
     shopping_list_ids = None
     favorites_ids = None
@@ -82,7 +82,7 @@ def author_recipes(request, slug):
 
 
 def single_recipe(request, slug):
-    """***"""
+    """View recipe"""
 
     favorites_ids = None
     shopping_list_ids = None
@@ -114,7 +114,7 @@ def single_recipe(request, slug):
 
 @login_required
 def create_recipe(request):
-    """***"""
+    """Create a recipe"""
 
     if request.method == 'POST':
         recipe_form = RecipeForm(
@@ -142,7 +142,7 @@ def create_recipe(request):
 
 @login_required
 def edit_recipe(request, slug):
-    """***"""
+    """Edit recipe"""
 
     recipe = get_object_or_404(Recipe, slug=slug)
     ingredients = RecipeIngredient.objects.filter(recipe=recipe)
@@ -176,7 +176,7 @@ def edit_recipe(request, slug):
 
 @login_required
 def favorites(request):
-    """***"""
+    """Add in favorites"""
 
     user = request.user
     favourites = Favorite.objects.filter(user=user)
@@ -207,7 +207,7 @@ def favorites(request):
 
 @login_required
 def followers(request):
-    """***"""
+    """Subscriptions"""
 
     user = request.user
 
@@ -225,7 +225,7 @@ def followers(request):
 
 
 def shopping_list(request):
-    """***"""
+    """Shopping list"""
 
     user = request.user
     my_shopping_list = ShoppingList.objects.filter(user=user)
@@ -239,14 +239,14 @@ def shopping_list(request):
 
 
 def remove_recipe(request, slug):
-    """***"""
+    """Remove a recipe"""
 
     Recipe.objects.filter(slug=slug).delete()
     return redirect('index')
 
 
 def download_shopping_list(request):
-    """***"""
+    """Download a shopping list"""
 
     ingredients = (RecipeIngredient.objects
                    .filter(recipe__shopping_list__user=request.user)
@@ -274,7 +274,7 @@ def download_shopping_list(request):
 
 
 def page_not_found(request, exception):
-    """***"""
+    """404"""
 
     return render(
         request,
@@ -285,6 +285,6 @@ def page_not_found(request, exception):
 
 
 def server_error(request):
-    """***"""
+    """500"""
 
     return render(request, 'errors/500.html', status=500)

@@ -8,7 +8,7 @@ from users.forms import RegistrationForm
 
 
 def signup(request):
-    """***"""
+    """Registration"""
 
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -30,7 +30,7 @@ def signup(request):
 
 
 class LoginFormView(SuccessMessageMixin, LoginView):
-    """***"""
+    """Login"""
 
     template_name = 'registration/login.html'
     success_url = reverse_lazy('login')
