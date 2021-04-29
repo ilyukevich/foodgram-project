@@ -4,17 +4,6 @@ from recipes.models import Recipe
 def tags_filter(request, author=None, favourites=None):
     """ Filter recipes by tags 'breakfast', 'lunch', 'dinner'"""
 
-    # state = ['breakfast', 'lunch', 'dinner']
-    # breakfast = request.GET.get('breakfast')
-    # lunch = request.GET.get('lunch')
-    # dinner = request.GET.get('dinner')
-    # if breakfast:
-    #     state[0] = None
-    # if lunch:
-    #     state[1] = None
-    # if dinner:
-    #     state[2] = None
-
     tags_for_filter = []
     tag_list = ['breakfast', 'lunch', 'dinner']
 

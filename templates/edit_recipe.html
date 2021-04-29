@@ -64,7 +64,8 @@
                             <label for="cantidad" class="form__label" id="cantidadVal">шт.</label>
                         </div>
                         <div class="form__field-group-ingredientes-container">
-                            {% for ingredient in ingredients %}
+<!--                            {% for ingredient in ingredients %}-->
+                            {% for ing in form.instance.recipeingredient_set.all %}
                             <div class="form__field-item-ingredient" id="ing_3">
                                 <span> {{ ingredient.ingredient.title|capfirst }} - {{ ingredient.amount }} {{ ingredient.ingredient.dimension }}.</span>
                                 <span class="form__field-item-delete"></span>
