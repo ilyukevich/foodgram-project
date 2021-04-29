@@ -4,7 +4,7 @@ import string
 from django.contrib.postgres.fields import ArrayField
 from django.core.validators import MinValueValidator
 from django.db import models
-from django.db.models import UniqueConstraint
+from django.db.models import UniqueConstraint, CheckConstraint, Q
 from django.utils.text import slugify
 
 from users.models import User
@@ -97,7 +97,7 @@ class RecipeIngredient(models.Model):
     )
     amount = models.IntegerField(
         verbose_name='Количество',
-        validators=[MinValueValidator(0)]
+        validators=[MinValueValidator(2)]
     )
 
     def __str__(self):
@@ -105,7 +105,7 @@ class RecipeIngredient(models.Model):
 
     class Meta:
         verbose_name = 'Количество'
-        verbose_name_plural = 'Количество'
+        verbose_name_plural = 'Количества'
 
 
 class ShoppingList(models.Model):
@@ -125,10 +125,10 @@ class ShoppingList(models.Model):
     class Meta:
         UniqueConstraint(
             name='unique_user_shoppinglist',
-            fields=['user', 'recipe'],
+            fields=('user', 'recipe'),
         )
         verbose_name = 'Список покупок'
-        verbose_name_plural = 'Список покупок'
+        verbose_name_plural = 'Списки покупок'
 
 
 class Follow(models.Model):
@@ -146,9 +146,13 @@ class Follow(models.Model):
     )
 
     class Meta:
+        CheckConstraint(
+            check=Q('follower__exclude' == 'following'),
+            name='no_following_self'
+        )
         UniqueConstraint(
             name='unique_follow',
-            fields=['user', 'author'],
+            fields=('user', 'author'),
         )
         verbose_name = 'Подписчики'
         verbose_name_plural = 'Подписчики'
@@ -172,5 +176,9 @@ class Favorite(models.Model):
     )
 
     class Meta:
+        UniqueConstraint(
+            name='unique_favorite',
+            fields=['user', 'recipe']
+        )
         verbose_name = 'Избранное'
-        verbose_name_plural = 'Избранное'
+        verbose_name_plural = 'Избранные'

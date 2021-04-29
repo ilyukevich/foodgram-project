@@ -1,4 +1,10 @@
 # foodgram-project
+Project - site "Product Assistant".
+This is an online service where users can publish recipes, subscribe 
+to publications of other users, add recipes they like to the favorites list, 
+and download a summary list of products needed to prepare one or more selected 
+dishes before going to the store. 
+
 # Run
 1. [Install Docker](https://www.docker.com/products/docker-desktop) and [Docker Compose](https://docs.docker.com/compose/install/) (if you have Linux).
 2. Clone repository https://github.com/ilyukevich/foodgram-project.git
@@ -34,6 +40,14 @@
 * Django
 * Django REST
 * Docker
+
+# Author
+
+* **Artsiom Ilyukevich** - [ilyukevich](https://github.com/ilyukevich)
+
+# License
+
+This project uses the MIT License - see the [LICENSE.md](LICENSE.md)
 
 # Project on a production server
 http://84.252.128.104:8080/

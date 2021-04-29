@@ -2,7 +2,7 @@
     <nav class="nav">
         <div class="nav__container container">
             <ul class="nav__items list">
-                <li class="nav__item {% if request.resolver_match.url_name == 'index' %} nav__item_active {% endif %}"><a href="{% url 'index' %}" class="nav__link link">Рецепты</a></li>
+                <li class="nav__item {% if request.resolver_match.url_name == 'index' %} nav__item_active {% endif %}"><a href="{% url 'index' %}" class="nav__link link">Рецепты111</a></li>
                 {% if user.is_authenticated %}
                 <li class="nav__item {% if request.resolver_match.url_name == 'followers' %} nav__item_active {% endif %}"><a href="{% url 'followers' %}" class="nav__link link">Мои подписки</a></li>
                 <li class="nav__item {% if request.resolver_match.url_name == 'create_recipe' %} nav__item_active {% endif %}"><a href="{% url 'create_recipe' %}" class="nav__link link">Создать рецепт</a></li>
@@ -16,6 +16,7 @@
             </ul>
             <ul class="nav__items list">
                 {% if user.is_authenticated %}
+                Пользователь: {{ user.username }}.
                 <li class="nav__item {% if request.resolver_match.url_name == 'password_change' %} nav__item_active {% endif %}"><a href="{% url 'password_change' %}" class="nav__link link">Изменить пароль</a></li>
                 <li class="nav__item {% if request.resolver_match.url_name == 'logout' %} nav__item_active {% endif %}"><a href="{% url 'logout' %}" class="nav__link link">Выход</a></li>
                 {% else %}
