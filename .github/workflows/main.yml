@@ -57,7 +57,7 @@ jobs:
             sudo docker-compose stop
             sudo docker-compose rm web
             sudo docker-compose up -d
-            sudo docker exec -it exam-food_web_1 bash
+            sudo docker exec -it code_web_1 bash
             python manage.py makemigrations
             python manage.py migrate
 
