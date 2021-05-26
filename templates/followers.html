@@ -11,7 +11,7 @@
             {% for follower in my_followers %}
             <div class="card-user" data-author="{{ follower.author.id }}">
                 <div class="card-user__header">
-                    <h2 class="card-user__title">{{ follower.author }}</h2>
+                    <h2 class="card-user__title">{% firstof follower.author.get_full_name follower.author.username %}</h2>
                 </div>
                 <div class="card-user__body">
                     <ul class="card-user__items">
