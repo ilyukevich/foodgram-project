@@ -9,6 +9,7 @@ from recipes.models import (Favorite, Follow, Recipe, RecipeIngredient,
                             ShoppingList)
 from recipes.utils import tags_filter
 from users.models import User
+from django.db.models import F, Sum
 
 
 def index(request):
@@ -248,27 +249,30 @@ def remove_recipe(request, slug):
 def download_shopping_list(request):
     """Download a shopping list"""
 
-    ingredients = (RecipeIngredient.objects
-                   .filter(recipe__shopping_list__user=request.user)
-                   .select_related('ingredient'))
-    items = {}
-    for item in ingredients:
-        title = item.ingredient.title
-        dimension = item.ingredient.dimension
-        amount = item.amount
-        if not items.get(title):
-            items[title] = [amount, dimension]
-        else:
-            items[title] = [items[title][0] + amount, dimension]
+    items = RecipeIngredient.objects.select_related('recipe', 'ingredient')
+
+    if request.user.is_authenticated:
+        items = items.filter(recipe__shopping_list__user=request.user)
+    else:
+        return HttpResponse('Ошибка')
+
+    items = items.values(
+        'ingredient__title', 'ingredient__dimension'
+    ).annotate(
+        name=F('ingredient__title'),
+        units=F('ingredient__dimension'),
+        total=Sum('amount'),
+    ).order_by('-total')
+
     if items:
-        file_data = [f'{k.capitalize()}: {v[0]} {v[1]}\n'
-                     for k, v in items.items()]
-        response = HttpResponse(
-            file_data,
-            content_type='application/text charset=utf-8'
-        )
-        response['Content-Disposition'] = ('attachment; '
-                                           'filename="shopping_list.txt"')
+        text = '\n'.join([
+            f"{item['name']} ({item['units']}) - {item['total']}"
+            for item in items
+        ])
+
+        filename = "foodgram_shoping_cart.txt"
+        response = HttpResponse(text, content_type='text/plain')
+        response['Content-Disposition'] = f'attachment; filename={filename}'
         return response
     return redirect('index')
 

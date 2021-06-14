@@ -28,12 +28,6 @@ def purchases(request, id=None):
             return Response({'success': True}, status=status.HTTP_201_CREATED)
         return Response({'fail': False}, status=status.HTTP_400_BAD_REQUEST)
 
-    # if request.method == 'DELETE':
-    #     item = ShoppingList.objects.get(recipe__id=id)
-    #     if item.delete():
-    #         return Response({'success': True}, status=status.HTTP_200_OK)
-    #     return Response({'fail': False}, status=status.HTTP_400_BAD_REQUEST)
-
     if request.method == 'DELETE':
         item = ShoppingList.objects.filter(recipe__id=id).delete()
         if item is None or 0:
