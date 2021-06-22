@@ -213,7 +213,7 @@ def followers(request):
     user = request.user
 
     my_followers = Follow.objects.filter(user=user)
-    recipes = Recipe.objects.filter(author__following__in=my_followers)
+    recipes = Recipe.objects.filter(author__following__in=my_followers)[:4]
     shopping_list_ids = (ShoppingList.objects
                          .filter(user=user)
                          .values_list('recipe', flat=True))

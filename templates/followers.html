@@ -29,6 +29,9 @@
                                 </li>
                                 {% endif %}
                             {% endfor %}
+                        <li class="card-user__item">
+                            <a href="{% url 'author_recipes' follower.author.username %}" class="card-user__link link">Всего рецептов автора: {{ follower.author.recipe.count }}</a>
+						</li>
                     </ul>
                 </div>
                 <div class="card-user__footer">
