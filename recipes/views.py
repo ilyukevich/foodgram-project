@@ -11,6 +11,8 @@ from recipes.utils import tags_filter
 from users.models import User
 from django.db.models import F, Sum
 
+from django.conf import settings
+
 
 def index(request):
     """Index page"""
@@ -206,21 +208,34 @@ def favorites(request):
     return render(request, 'favorite.html', context)
 
 
+def paginator_data(request, recipes):
+    paginator = Paginator(recipes, settings.PAG_COUNT)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+    return page, paginator
+
+
 @login_required
 def followers(request):
     """Subscriptions"""
 
-    user = request.user
-
-    my_followers = Follow.objects.filter(user=user)
-    recipes = Recipe.objects.filter(author__following__in=my_followers)[:4]
-    shopping_list_ids = (ShoppingList.objects
-                         .filter(user=user)
-                         .values_list('recipe', flat=True))
+    follow_authors = User.objects.filter(
+        following__user=request.user).prefetch_related('recipe')
+    page, paginator = paginator_data(request, follow_authors)
+    one_list = [1, 21, 31, 41, 51, 61, 71, 81, 91]
+    two_list = [2, 3, 4, 22, 23, 24, 32, 33, 34, 42, 43, 44, 52, 53, 54, 62,
+                63, 64, 72, 73, 74, 82, 83, 84, 92, 93, 94]
+    three_list = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                  25, 26, 27, 28, 29, 30, 35, 36, 37, 38, 39, 40, 45, 46, 47,
+                  48, 49, 50, 55, 56, 57, 58, 59, 60, 65, 66, 67, 68, 69, 70,
+                  75, 76, 77, 78, 79, 80, 85, 86, 87, 88, 89, 90, 95, 96, 97,
+                  98, 99, 100]
     context = {
-        'my_followers': my_followers,
-        'recipes': recipes,
-        'shopping_list_ids': shopping_list_ids,
+        'page': page,
+        'paginator': paginator,
+        'one_list': one_list,
+        'two_list': two_list,
+        'three_list': three_list,
     }
     return render(request, 'followers.html', context)
 
