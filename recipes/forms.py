@@ -2,6 +2,8 @@ from django import forms
 
 from recipes.models import Ingredient, Recipe, RecipeIngredient
 
+from django.core.exceptions import ValidationError
+
 TAGS = [
     ('breakfast', 'Завтрак'),
     ('lunch', 'Обед'),
@@ -37,6 +39,7 @@ class RecipeForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
+        check_ing, check_quantity = False, True
 
         for key, value in self.data.items():
             if key in ['breakfast', 'lunch', 'dinner']:
@@ -44,6 +47,30 @@ class RecipeForm(forms.ModelForm):
             elif (key.startswith('nameIngredient')
                   or key.startswith('valueIngredient')):
                 self.ingredients.append(value)
+                check_ing = True
+
+        errors = {}
+        if not self.cleaned_data.get('tag'):
+            errors['tag'] = ValidationError('Убедитесь, что установили хотя бы один ТЭГ !')
+
+        if errors:
+            raise ValidationError(errors)
+
+        if not check_ing:
+            raise ValidationError(
+                'Проверьте ингридиенты! Добавьте в рецепт хотя бы один ингредиент !'
+            )
+
+        for key in self.data.keys():
+            if key.startswith('valueIngredient'):
+                print(self.data[key])
+                if int(self.data[key]) < 1:
+                    check_quantity = False
+
+        if not check_quantity:
+            raise ValidationError(
+                ' Проверьте ингридиенты! Убедитесь, что значения у ингредиентов больше 0 !'
+            )
 
     def save(self, commit=True):
         recipe = super(RecipeForm, self).save(commit=False)

@@ -8,6 +8,13 @@
         <div class="main__header">
             <h1 class="main__title">Создание рецепта</h1>
         </div>
+         {% for error in form.non_field_errors %}
+                        <div class='form__error'>
+                        <span class="form__error">
+                        {{ error }}
+                        </span>
+                        </div>
+                        {% endfor %}
         <div class="form-container">
             <form class="form" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -37,7 +44,13 @@
                                 <label for="{{ form.dinner.id_for_label }}" class="tags__label">Ужин</label>
                             </div>
                         </div>
-                        <span class="form__error"></span>
+
+                         {% if form.tag.errors %}
+                        <span class="form__error">
+                            {{ form.tag.errors }}
+                        </span>
+                    {% endif %}
+
                     </div>
                 </div>
                 <div class="form__group">
@@ -55,7 +68,11 @@
 
                         </div>
                         <span class="form__ingredient-link" id="addIng">Добавить ингредиент</span>
-                        <span class="form__error"></span>
+                         {% if form.ingredient.errors %}
+                        <span class="form__error">
+                            {{ form.ingredient.errors }}
+                        </span>
+                    {% endif %}
                     </div>
                 </div>
                 <div class="form__group">
@@ -78,15 +95,16 @@
                     </div>
                 </div>
                 <div class="form__group">
-                    <span class="form__label">Загрузить фото</span>
-                    <div class="form__field-group">
-                        <label for="{{ form.image.id_for_label }}" class="form__file-button">Выбрать файл</label>
-                        {{ form.image|add_class:"form__file" }}
-                        {% if form.errors %}
-                        <span id="{{ form.image.id_for_label }}-error" class="form__error">{{ form.image.errors|safe }}</span>
-                        {% endif %}
-                    </div>
+                <span class="form__label">
+                    Загрузить фото
+                </span>
+                <div class="form__field-group">
+                    {{ form.image|add_class:'form__file-button' }}
+                    <span class="form__error">
+                        {{ form.image.errors }}
+                    </span>
                 </div>
+            </div>
                 <div class="form__footer">
                     <button class="button button_style_blue">Создать рецепт</button>
                 </div>

@@ -128,16 +128,16 @@ def create_recipe(request):
         if recipe_form.is_valid():
             recipe_form.save()
 
-        return redirect('index')
+            return redirect('index')
     else:
-        form = RecipeForm(username=request.user)
+        recipe_form = RecipeForm(username=request.user)
 
     user = request.user
     shopping_list_ids = (ShoppingList.objects
                          .filter(user=user)
                          .values_list('recipe', flat=True))
     context = {
-        'form': form,
+        'form': recipe_form,
         'shopping_list_ids': shopping_list_ids,
     }
     return render(request, 'create_recipe.html', context=context)
@@ -164,12 +164,12 @@ def edit_recipe(request, slug):
         if recipe_form.is_valid():
             recipe_form.save()
 
-        return redirect('index')
+            return redirect('index')
     else:
-        form = RecipeForm(username=request.user, instance=recipe)
+        recipe_form = RecipeForm(username=request.user, instance=recipe)
 
     context = {
-        'form': form,
+        'form': recipe_form,
         'recipe': recipe,
         'ingredients': ingredients,
         'shopping_list_ids': my_shopping_list,
